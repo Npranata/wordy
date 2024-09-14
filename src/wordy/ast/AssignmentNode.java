@@ -3,6 +3,8 @@ package wordy.ast;
 import java.util.Map;
 import java.util.Objects;
 
+import wordy.interpreter.EvaluationContext;
+
 import static wordy.ast.Utils.orderedMap;
 
 /**
@@ -48,6 +50,11 @@ public class AssignmentNode extends StatementNode {
         return Objects.hash(variable, expression);
     }
 
+    @Override
+    protected void doRun(EvaluationContext context) {
+       double theExpression  = this.expression.doEvaluate(context);
+       context.set(this.variable.getName(), theExpression);
+    }
     @Override
     public String toString() {
         return "AssignmentStatement{"

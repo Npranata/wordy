@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
+import wordy.interpreter.EvaluationContext;
+
 /**
  * A variable reference (e.g. “x”) in a Wordy abstract syntax tree. Note that this is a variable
  * _usage_; Wordy does not have variable _declarations_.
@@ -50,7 +52,14 @@ public class VariableNode extends ExpressionNode {
     }
 
     @Override
+    protected double  doEvaluate(EvaluationContext context){
+        double result = context.get(name);
+        return result;
+    }
+
+    @Override
     protected String describeAttributes() {
         return "(name=\"" + name + "\")";
     }
+
 }

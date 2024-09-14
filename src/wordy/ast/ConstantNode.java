@@ -42,7 +42,14 @@ public final class ConstantNode extends ExpressionNode {
     }
 
     @Override
+    protected double doEvaluate(EvaluationContext context) {
+        return this.value; // Return the constant value
+    }
+    
+    @Override
     protected String describeAttributes() {
         return "(value=" + value + ')';
     }
+
+  
 }
