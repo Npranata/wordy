@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import wordy.interpreter.EvaluationContext;
+import java.io.PrintWriter;
 
 /**
  * A variable reference (e.g. “x”) in a Wordy abstract syntax tree. Note that this is a variable
@@ -61,5 +62,10 @@ public class VariableNode extends ExpressionNode {
     protected String describeAttributes() {
         return "(name=\"" + name + "\")";
     }
+
+    public void compile(PrintWriter out){
+        String variable = getName();
+        out.print("context." + variable);
+    } 
 
 }

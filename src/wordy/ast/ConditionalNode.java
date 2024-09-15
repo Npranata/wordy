@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import wordy.interpreter.EvaluationContext;
+import java.io.PrintWriter;
 
 import static wordy.ast.Utils.orderedMap;
 
@@ -58,6 +59,7 @@ public class ConditionalNode extends StatementNode {
     public int hashCode() {
         return Objects.hash(operator, lhs, rhs, ifTrue, ifFalse);
     }
+
     @Override
     protected void doRun(EvaluationContext context){
     double lhsValue = lhs.evaluate(context);
@@ -85,6 +87,43 @@ public class ConditionalNode extends StatementNode {
         ifFalse.run(context);  
     }
     }
+    
+    @Override
+public void compile(PrintWriter out) {
+    // Compile the condition
+    out.print("if (");
+    lhs.compile(out);
+
+    // Print the appropriate operator
+    switch (operator) {
+        case EQUALS:
+            out.print(" == ");
+            break;
+        case LESS_THAN:
+            out.print(" < ");
+            break;
+        case GREATER_THAN:
+            out.print(" > ");
+            break;
+        default:
+            throw new UnsupportedOperationException("Unsupported operator: " + operator);
+    }
+
+    rhs.compile(out);
+    out.print(") ");
+
+
+    if (ifTrue != null) {
+        ifTrue.compile(out);
+
+    } 
+
+
+    if (ifFalse != null) {
+        out.print(" else ");
+        ifFalse.compile(out);
+    }
+}
 
 
     @Override

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.io.PrintWriter;
 
 import wordy.interpreter.EvaluationContext;
 
@@ -59,6 +60,19 @@ public class BlockNode extends StatementNode {
           }
     }
 
+    @Override
+    public void compile(PrintWriter out) {
+    out.print("{ ");
+    boolean first = true;
+    for (StatementNode statement : statements) {
+        if (!first) {
+            out.print(" ");
+        }
+        statement.compile(out); 
+        first = false;
+    }
+    out.print(" }");
+    }
 
     @Override
     public String toString() {

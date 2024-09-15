@@ -2,6 +2,7 @@ package wordy.ast;
 
 import java.util.Map;
 import java.util.Objects;
+import java.io.PrintWriter;
 
 import wordy.interpreter.EvaluationContext;
 
@@ -65,6 +66,50 @@ public class BinaryExpressionNode extends ExpressionNode {
             throw new UnsupportedOperationException("Unknown Operation");
        }
     }
+
+    @Override
+    public void compile(PrintWriter out) {
+        switch (this.operator) {
+            case ADDITION:
+                out.print("(");
+                this.lhs.compile(out);
+                out.print(" + ");
+                this.rhs.compile(out);
+                out.print(")");
+                break;
+            case SUBTRACTION:
+                out.print("(");
+                this.lhs.compile(out);
+                out.print(" - ");
+                this.rhs.compile(out);
+                out.print(")");
+                break;
+            case MULTIPLICATION:
+                out.print("(");
+                this.lhs.compile(out);
+                out.print(" * ");
+                this.rhs.compile(out);
+                out.print(")");
+                break;
+            case DIVISION:
+                out.print("(");
+                this.lhs.compile(out);
+                out.print(" / ");
+                this.rhs.compile(out);
+                out.print(")");
+                break;
+            case EXPONENTIATION:
+                out.print("Math.pow(");
+                this.lhs.compile(out);
+                out.print(", ");
+                this.rhs.compile(out);
+                out.print(")");
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown Operation");
+        }
+    }
+    
 
 
     @Override

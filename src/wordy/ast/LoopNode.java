@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import wordy.interpreter.EvaluationContext;
 import wordy.interpreter.LoopExited;
+import java.io.PrintWriter;
 
 /**
  * Wordy’s only looping construct, essentially an infinite while loop. Repeatedly runs the `body`
@@ -48,6 +49,13 @@ public class LoopNode extends StatementNode {
         }
     }
     }
+
+    @Override
+public void compile(PrintWriter out) {
+    out.print("while (true)  ");
+    body.compile(out); // Compile the body of the loop
+    out.print(" ");
+}
 
     @Override
     public String toString() {

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import wordy.interpreter.EvaluationContext;
+import java.io.PrintWriter;
 
 import static wordy.ast.Utils.orderedMap;
 
@@ -54,6 +55,13 @@ public class AssignmentNode extends StatementNode {
     protected void doRun(EvaluationContext context) {
        double theExpression  = this.expression.doEvaluate(context);
        context.set(this.variable.getName(), theExpression);
+    }
+
+    @Override
+    public void compile(PrintWriter out){
+        out.print("context." + this.variable.getName() + "=" );
+        this.expression.compile(out);
+        out.print(";");
     }
     @Override
     public String toString() {
